@@ -9,7 +9,7 @@ git submodule update
 # local.conf won't exist until this step on first execution
 source poky/oe-init-build-env
 
-CONFLINE="MACHINE = \"qemuarm64\""
+CONFLINE="MACHINE = \"cortexa53\""
 
 cat conf/local.conf | grep "${CONFLINE}" > /dev/null
 local_conf_info=$?
@@ -23,7 +23,7 @@ else
 fi
 
 
-bitbake-layers show-layers | grep "meta-aesd" > /dev/null
+bitbake-layers show-layers | grep "thermometer" > /dev/null
 layer_info=$?
 
 if [ $layer_info -ne 0 ];then
