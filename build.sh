@@ -37,7 +37,7 @@ add_layer() {
 	fi
 }
 
-add_configuration "MACHINE = \"raspberrypi0-2w-64\""
+add_configuration "MACHINE = \"raspberrypi0-wifi\""
 add_configuration "LICENSE_FLAGS_ACCEPTED = \"synaptics-killswitch\""
 
 add_layer "meta-raspberrypi"
