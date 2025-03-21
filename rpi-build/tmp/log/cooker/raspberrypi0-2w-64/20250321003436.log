@@ -1,6 +1,0 @@
-ERROR:  OE-core's config sanity checker detected a potential misconfiguration.
-    Either fix the cause of this error or at your own risk disable the checker (see sanity.conf).
-    Following is the list of potential problems / advisories:
-
-    MACHINE=raspberrypi0-2w-64 is invalid. Please set a valid MACHINE in your local.conf, environment or other configuration file.
-
