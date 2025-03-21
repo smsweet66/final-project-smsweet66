@@ -27,7 +27,7 @@ layer_info=$?
 
 if [ $layer_info -ne 0 ]; then
 	echo "Adding meta-raspberrypi layer"
-	bitbake-layers add-layer ../meta-thermometer
+	bitbake-layers add-layer ../meta-raspberrypi
 else
 	echo "meta-raspberrypi layer already exists"
 fi
