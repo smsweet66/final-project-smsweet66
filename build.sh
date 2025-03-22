@@ -61,7 +61,7 @@ add_configuration "CORE_IMAGE_EXTRA_INSTALL += \"openssh\""
 add_configuration "DISTRO_FEATURES:append = \"bluez5 bluetooth wifi\""
 
 add_layer "meta-raspberrypi" ".."
-add_layer "meta-oe" "../meta-openebedded"
+add_layer "meta-oe" "../meta-openembedded"
 add_layer "meta-python" "../meta-openembedded"
 add_layer "meta-networking" "../meta-openembedded"
 add_layer "meta-thermometer" ".."
