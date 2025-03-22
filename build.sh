@@ -39,6 +39,7 @@ add_layer() {
 
 add_configuration "MACHINE = \"raspberrypi0-wifi\""
 add_configuration "LICENSE_FLAGS_ACCEPTED = \"synaptics-killswitch\""
+add_configuration "IMAGE_FSTYPES = \"tar.xz ext3 rpi-sdimg\""
 
 add_layer "meta-raspberrypi"
 add_layer "meta-thermometer"
