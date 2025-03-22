@@ -61,7 +61,7 @@ add_configuration "CORE_IMAGE_EXTRA_INSTALL += \"openssh\""
 add_configuration "DISTRO_FEATURES:append = \"bluez5 bluetooth wifi\""
 
 add_layer "meta-raspberrypi" ".."
-add_layer "meta-networking "../meta-openembedded"
+add_layer "meta-networking" "../meta-openembedded"
 add_layer "meta-thermometer" ".."
 
 bitbake-layers show-layers | grep "meta-raspberrypi" > /dev/null
