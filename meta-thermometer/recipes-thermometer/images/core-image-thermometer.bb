@@ -1,8 +1,4 @@
 inherit core-image
-CORE_IMAGE_EXTRA_INSTALL += "linux-firmware-bcm43430"
-CORE_IMAGE_EXTRA_INSTALL += "wpa-supplicant"
-CORE_IMAGE_EXTRA_INSTALL += "bluez5"
-CORE_IMAGE_EXTRA_INSTALL += "udev-rules-rpi"
 CORE_IMAGE_EXTRA_INSTALL += "thermometer"
 CORE_IMAGE_EXTRA_INSTALL += "openssh"
 inherit extrausers
