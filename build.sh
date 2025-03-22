@@ -57,7 +57,7 @@ add_configuration "IMAGE_INSTALL:append = \" linux-firmware-bcm43430 wpa-supplic
 add_configuration "IMAGE_FSTYPES = \"tar.bz2 ext4 rpi-sdimg\""
 add_configuration "SDIMG_ROOTFS_TYPE = \"ext4\""
 add_configuration "CORE_IMAGE_EXTRA_INSTALL += \"openssh\""
-add_configuration "DISTRO_FEATURES:append += \"bluez5 bluetooth wifi\""
+add_configuration "DISTRO_FEATURES:append = \"bluez5 bluetooth wifi\""
 
 add_layer "meta-raspberrypi"
 add_layer "meta-thermometer"
