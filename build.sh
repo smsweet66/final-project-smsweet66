@@ -25,13 +25,14 @@ add_configuration() {
 
 add_layer() {
 	LAYER=$1
+	FOLDER=$2
 
 	bitbake-layers show-layers | grep $LAYER > /dev/null
 	layer_info=$?
 
 	if [ $layer_info -ne 0 ]; then
 		echo "Adding $LAYER layer"
-		bitbake-layers add-layer ../$LAYER
+		bitbake-layers add-layer $FOLDER/$LAYER
 	else
 		echo "$LAYER layer already exists"
 	fi
@@ -59,8 +60,9 @@ add_configuration "SDIMG_ROOTFS_TYPE = \"ext4\""
 add_configuration "CORE_IMAGE_EXTRA_INSTALL += \"openssh\""
 add_configuration "DISTRO_FEATURES:append = \"bluez5 bluetooth wifi\""
 
-add_layer "meta-raspberrypi"
-add_layer "meta-thermometer"
+add_layer "meta-raspberrypi" ".."
+add_layer "meta-networking "../meta-openembedded"
+add_layer "meta-thermometer" ".."
 
 bitbake-layers show-layers | grep "meta-raspberrypi" > /dev/null
 layer_info=$?
