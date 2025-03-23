@@ -18,8 +18,6 @@ add_configuration() {
 	if [ $local_conf_info -ne 0 ];then
 		echo "Append ${CONFLINE} in the local.conf file"
 		echo ${CONFLINE} >> conf/local.conf
-	else
-		echo "${CONFLINE} already exists in the local.conf file"
 	fi
 }
 
@@ -33,8 +31,6 @@ add_layer() {
 	if [ $layer_info -ne 0 ]; then
 		echo "Adding $LAYER layer"
 		bitbake-layers add-layer $FOLDER/$LAYER
-	else
-		echo "$LAYER layer already exists"
 	fi
 }
 
