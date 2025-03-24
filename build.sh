@@ -36,7 +36,7 @@ add_layer() {
 
 add_configuration "MACHINE = \"raspberrypi0-wifi\""
 add_configuration "LICENSE_FLAGS_ACCEPTED = \"synaptics-killswitch\""
-add_configuration "IMAGE_FSTYPES = \"tar.xz ext3 rpi-sdimg\""
+add_configuration "IMAGE_FSTYPES = \"rpi-sdimg\""
 add_configuration "ENABLE_UART = \"1\""
 add_configuration "ENABLE_DWC2_PERIPHERAL = \"1\""
 add_configuration "DISABLE_RPI_BOOT_LOGO = \"1\""
