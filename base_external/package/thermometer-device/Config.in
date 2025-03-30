@@ -1,5 +1,4 @@
 config BR2_PACKAGE_THERMOMETER_DEVICE
 	bool "thermometer-device"
 	help
-	  Builds the thermometer device drivers for reading
-      actual temperature data
+	  Builds the thermometer device drivers for reading actual temperature data.

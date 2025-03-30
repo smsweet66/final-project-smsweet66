@@ -3,5 +3,4 @@ config BR2_PACKAGE_THERMOMETER_CLIENT
     depends on BR2_PACKAGE_HOST_RUSTC_TARGET_ARCH_SUPPORTS
  	select BR2_PACKAGE_HOST_RUSTC
 	help
-	  Builds the thermometer client for sending temperature data
-      to a Home Assistant server on the network
+	  Builds the thermometer client for sending temperature data to a Home Assistant server on the network.
