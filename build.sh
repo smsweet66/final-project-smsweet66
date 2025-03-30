@@ -1,70 +1,33 @@
 #!/bin/bash
-# Script to build image for qemu.
-# Author: Siddhant Jajoo.
+#Script to build buildroot configuration
+#Author: Siddhant Jajoo
 
+source shared.sh
+
+EXTERNAL_REL_BUILDROOT=../base_external
 git submodule init
 git submodule sync
 git submodule update
 
-# local.conf won't exist until this step on first execution
-source poky/oe-init-build-env rpi-build
+set -e 
+cd `dirname $0`
 
-add_configuration() {
-	CONFLINE=$1
-	
-	cat conf/local.conf | grep "${CONFLINE}" > /dev/null
-	local_conf_info=$?
+if [ ! -e buildroot/.config ]
+then
+	echo "MISSING BUILDROOT CONFIGURATION FILE"
 
-	if [ $local_conf_info -ne 0 ];then
-		echo "Append ${CONFLINE} in the local.conf file"
-		echo ${CONFLINE} >> conf/local.conf
+	if [ -e ${THERMOMETER_MODIFIED_DEFCONFIG} ]
+	then
+		echo "USING ${THERMOMETER_MODIFIED_DEFCONFIG}"
+		make -C buildroot defconfig BR2_EXTERNAL=${EXTERNAL_REL_BUILDROOT} BR2_DEFCONFIG=${THERMOMETER_MODIFIED_DEFCONFIG_REL_BUILDROOT}
+	else
+		echo "Run ./save_config.sh to save this as the default configuration in ${THERMOMETER_MODIFIED_DEFCONFIG}"
+		echo "Then add packages as needed to complete the installation, re-running ./save_config.sh as needed"
+		make -C buildroot defconfig BR2_EXTERNAL=${EXTERNAL_REL_BUILDROOT} BR2_DEFCONFIG=${THERMOMETER_DEFAULT_DEFCONFIG}
 	fi
-}
+else
+	echo "USING EXISTING BUILDROOT CONFIG"
+	echo "To force update, delete .config or make changes using make menuconfig and build again."
+	make -C buildroot BR2_EXTERNAL=${EXTERNAL_REL_BUILDROOT}
 
-add_layer() {
-	LAYER=$1
-	FOLDER=$2
-
-	bitbake-layers show-layers | grep $LAYER > /dev/null
-	layer_info=$?
-
-	if [ $layer_info -ne 0 ]; then
-		echo "Adding $LAYER layer"
-		bitbake-layers add-layer $FOLDER/$LAYER
-	fi
-}
-
-add_configuration "MACHINE = \"raspberrypi0-wifi\""
-add_configuration "LICENSE_FLAGS_ACCEPTED = \"synaptics-killswitch\""
-add_configuration "IMAGE_FSTYPES = \"rpi-sdimg\""
-add_configuration "ENABLE_UART = \"1\""
-add_configuration "ENABLE_DWC2_PERIPHERAL = \"1\""
-add_configuration "DISABLE_RPI_BOOT_LOGO = \"1\""
-add_configuration "DISABLE_OVERSCAN = \"1\""
-add_configuration "DISABLE_SPLASH = \"1\""
-add_configuration "BOOT_DELAY = \"0\""
-add_configuration "GPU_MEM_256 = \"128\""
-add_configuration "GPU_MEM_512 = \"196\""
-add_configuration "GPU_MEM_1024 = \"396\""
-add_configuration "DISTRO_FEATURES:remove = \"x11\""
-add_configuration "DISTRO_FEATURES:append = \" opengl\""
-add_configuration "PACKAGE_CLASSES = \"package_ipk\""
-add_configuration "IMAGE_INSTALL:append = \" chrony\""
-add_configuration "IMAGE_INSTALL:append = \" linux-firmware-bcm43430 wpa-supplicant\""
-add_configuration "IMAGE_FSTYPES = \"tar.bz2 ext4 rpi-sdimg\""
-add_configuration "SDIMG_ROOTFS_TYPE = \"ext4\""
-add_configuration "CORE_IMAGE_EXTRA_INSTALL += \"openssh\""
-add_configuration "DISTRO_FEATURES:append = \"bluez5 bluetooth wifi\""
-
-add_layer "meta-raspberrypi" ".."
-add_layer "meta-oe" "../meta-openembedded"
-add_layer "meta-python" "../meta-openembedded"
-add_layer "meta-multimedia" "../meta-openembedded"
-add_layer "meta-networking" "../meta-openembedded"
-add_layer "meta-thermometer" ".."
-
-bitbake-layers show-layers | grep "meta-raspberrypi" > /dev/null
-layer_info=$?
-
-set -e
-bitbake core-image-thermometer
+fi
