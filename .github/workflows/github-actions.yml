@@ -18,7 +18,7 @@ jobs:
           github_token: ${{ secrets.SSH_PRIVATE_KEY }}
           config_file: './base_external/configs/thermometer_rpi0_defconfig'
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: raspberry pi image
           path: sdcard.img
