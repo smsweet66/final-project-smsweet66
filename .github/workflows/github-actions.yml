@@ -24,7 +24,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: raspberry pi image
-          path: sdcard.img
+          path: ./buildroot/output/images/sdcard.img
       - name: Cleanup
         if: always()
         run: |
