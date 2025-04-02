@@ -8,17 +8,24 @@ on:
 
 jobs:
   build:
+    container: cuaesd/aesd-autotest:24-assignment4-buildroot
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
-
-      - name: Create Raspberry Pi image
-        uses: Enchan1207/rpi-buildroot@v1
+      - name: Checkout submodules
+        run:  git submodule update --init --resursive
+      - uses: webfactory/ssh-agent@v0.5.3
         with:
-          github_token: ${{ secrets.SSH_PRIVATE_KEY }}
-          config_file: './base_external/configs/thermometer_rpi0_defconfig'
-
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Build Raspberry Pi image
+        env:
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+        run: ./build.sh
       - uses: actions/upload-artifact@v4
         with:
           name: raspberry pi image
           path: sdcard.img
+      - name: Cleanup
+        if: always()
+        run: |
+          ssh-add -D
