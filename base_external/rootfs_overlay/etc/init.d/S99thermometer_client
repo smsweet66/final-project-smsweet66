@@ -1,0 +1,27 @@
+#!/bin/sh
+
+module=thermometer
+device=thermometer
+mode="664"
+set -e
+# Group: since distributions do it differently, look for wheel or use staff
+if grep -q '^staff:' /etc/group; then
+    group="staff"
+else
+    group="wheel"
+fi
+
+case "$1" in
+    start)
+        start-stop-daemon -x /usr/bin/thermometer -S
+        ;;
+    stop)
+        start-stop-daemon -K -n thermometer
+        ;;
+    *)
+        echo "invalid argument"
+        exit 1
+        ;;
+esac
+
+exit 0
